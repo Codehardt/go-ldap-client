@@ -6,7 +6,6 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
-	"syscall"
 
 	"gopkg.in/ldap.v2"
 )
@@ -75,7 +74,7 @@ func (lc *LDAPClient) Close() {
 }
 
 func isRetryErr(err error) bool {
-	return err != nil && (errors.Is(err, syscall.EPIPE) || errors.Is(err, syscall.ECONNRESET))
+	return ldap.IsErrorWithCode(err, ldap.ErrorNetwork)
 }
 
 // Authenticate authenticates the user against the ldap backend.
