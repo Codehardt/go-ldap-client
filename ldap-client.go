@@ -61,6 +61,7 @@ func (lc *LDAPClient) Connect() error {
 		}
 
 		lc.Conn = l
+		lc.Conn.SetTimeout(ldap.DefaultTimeout)
 	}
 	return nil
 }
